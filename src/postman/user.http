@@ -1,0 +1,5 @@
+### find one
+GET http://localhost:3000/users/:id
+
+### soft delete
+DELETE http://localhost:3000/users/:id/deactive

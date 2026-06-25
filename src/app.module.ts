@@ -13,6 +13,7 @@ import { AuthModule } from './modules/auth/auth.module';
       isGlobal: true,
       validate: validateEnv,
       load: [databaseConfig],
+      // envFilePath: '.env',
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],

@@ -7,13 +7,20 @@ import {
   ParseUUIDPipe,
   Patch,
   Body,
+  Post,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { CreateUserDto } from './dto/create-user.dto';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
+  // create user
+  @Post()
+  create(@Body() createUserDto: CreateUserDto) {
+    return this.usersService.create(createUserDto);
+  }
 
   // update user
   @Patch(':id')
@@ -30,6 +37,20 @@ export class UsersController {
   @HttpCode(200)
   findOne(@Param('id', ParseUUIDPipe) id: string) {
     return this.usersService.findOne(id);
+  }
+
+  // find by email
+  @Get('email/:email')
+  @HttpCode(200)
+  findByEmail(@Param('email') email: string) {
+    return this.usersService.findByEmail(email);
+  }
+
+  // find all
+  @Get()
+  @HttpCode(200)
+  findAll() {
+    return this.usersService.findAll();
   }
 
   // soft delete

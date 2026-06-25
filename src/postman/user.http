@@ -1,5 +1,22 @@
+### create user
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+    "email": "7@example.com",
+    "password": "123bA567@",
+    "fullName": "1adsAa"
+
+}
+
 ### find one
-GET http://localhost:3000/users/:id
+GET http://localhost:3000/users/9f3bb46a-44ac-4450-87ae-6a4ea3302d38
+
+### find email
+GET http://localhost:3000/users/email/1@example.com
+
+### find all
+GET http://localhost:3000/users
 
 ### soft delete
-DELETE http://localhost:3000/users/:id/deactive
+DELETE http://localhost:3000/users/9f3bb46a-44ac-4450-87ae-6a4ea3302d38/deactive

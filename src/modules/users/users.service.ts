@@ -10,6 +10,11 @@ export class UsersService {
     @InjectRepository(User)
     private usersRepository: Repository<User>,
   ) {}
+  // create user
+  async create(createUserDto: Partial<User>): Promise<User> {
+    const newUser = this.usersRepository.create(createUserDto);
+    return this.usersRepository.save(newUser);
+  }
 
   // update user
   async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
@@ -24,13 +29,23 @@ export class UsersService {
   }
 
   // find one
-  async findOne(id: string): Promise<User | null> {
+  async findOne(id: string): Promise<User> {
     const existingUser = await this.usersRepository.findOne({ where: { id } });
 
     if (!existingUser) {
       throw new NotFoundException(`Not found user with id: ${id}`);
     }
     return existingUser;
+  }
+
+  // find by email
+  async findByEmail(email: string): Promise<User | null> {
+    return this.usersRepository.findOne({ where: { email } });
+  }
+
+  // find all
+  async findAll(): Promise<User[]> {
+    return this.usersRepository.find();
   }
 
   // soft delete

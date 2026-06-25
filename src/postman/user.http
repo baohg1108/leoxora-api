@@ -1,16 +1,25 @@
-### create user
+### register
 POST http://localhost:3000/auth/register
 Content-Type: application/json
 
 {
-    "email": "7@example.com",
+    "email": "test1@example.com",
     "password": "123bA567@",
     "fullName": "1adsAa"
 
 }
 
+### login
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+    "email": "test1@example.com",
+    "password": "123bA567@"
+}
+
 ### find one
-GET http://localhost:3000/users/9f3bb46a-44ac-4450-87ae-6a4ea3302d38
+GET http://localhost:3000/users/f17b8942-99b1-418b-ae4f-67a8d980335b
 
 ### find email
 GET http://localhost:3000/users/email/1@example.com

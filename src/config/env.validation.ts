@@ -24,6 +24,8 @@ export const envSchema = z.object({
 
   // JWT
   JWT_SECRET: z.string().min(32),
+  JWT_EXPIRES_IN: z.string().default('12'),
+  BCRYPT_SALT_ROUNDS: z.coerce.number().positive().default(12),
 
   // Logging
   LOG_LEVEL: z.enum(['debug', 'info', 'warn', 'error']).default('info'),

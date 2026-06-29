@@ -6,6 +6,7 @@ import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { ConfigService } from '@nestjs/config';
 import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { AccessTokenGuard } from './common/guards/access-token.guard';
 
 @Module({
   imports: [
@@ -13,7 +14,6 @@ import { AuthModule } from './modules/auth/auth.module';
       isGlobal: true,
       validate: validateEnv,
       load: [databaseConfig],
-      // envFilePath: '.env',
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
@@ -29,5 +29,6 @@ import { AuthModule } from './modules/auth/auth.module';
     UsersModule,
     AuthModule,
   ],
+  providers: [AccessTokenGuard],
 })
 export class AppModule {}

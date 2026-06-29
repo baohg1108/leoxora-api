@@ -10,22 +10,31 @@ export class UsersService {
     @InjectRepository(User)
     private usersRepository: Repository<User>,
   ) {}
+
   // create user
-  async create(createUserDto: Partial<User>): Promise<User> {
-    const newUser = this.usersRepository.create(createUserDto);
+  async create(data: {
+    email: string;
+    fullName: string;
+    avatarUrl?: string;
+    passwordHash: string;
+  }): Promise<User> {
+    const newUser = this.usersRepository.create(data);
     return this.usersRepository.save(newUser);
   }
 
   // update user
   async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
-    const existingUser = await this.usersRepository.findOne({ where: { id } });
-
-    if (!existingUser) {
-      throw new NotFoundException(`Not found user with id: ${id}`);
-    }
-
+    const existingUser = await this.findOne(id);
     const updatedUser = this.usersRepository.merge(existingUser, updateUserDto);
     return this.usersRepository.save(updatedUser);
+  }
+
+  // update refresh token hash
+  async updateRefreshTokenHash(
+    userId: string,
+    hashedRefreshToken: string | null,
+  ): Promise<void> {
+    await this.usersRepository.update(userId, { hashedRefreshToken });
   }
 
   // find one

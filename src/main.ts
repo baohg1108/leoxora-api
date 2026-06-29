@@ -6,6 +6,7 @@ import { EnvConfig } from './config/env.validation';
 import { ValidationPipe } from '@nestjs/common';
 import { ClassSerializerInterceptor } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
+import { AccessTokenGuard } from './common/guards/access-token.guard';
 
 async function bootstrap() {
   // Create the NestJS application
@@ -19,7 +20,10 @@ async function bootstrap() {
       forbidNonWhitelisted: true,
     }),
   );
-  app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
+
+  const reflector = app.get(Reflector);
+  app.useGlobalGuards(app.get(AccessTokenGuard));
+  app.useGlobalInterceptors(new ClassSerializerInterceptor(reflector));
 
   // Logger instance
   const logger = new Logger('Bootstrap');

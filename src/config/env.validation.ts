@@ -1,5 +1,12 @@
 import { z } from 'zod';
 
+const msDurationSchema = z
+  .string()
+  .regex(
+    /^\d+(\.\d+)?\s*(ms|s|m|h|d|w|y)$/,
+    'Duration must match ms format, e.g. "15m", "7d", "1h"',
+  );
+
 export const envSchema = z.object({
   // Environment
   NODE_ENV: z
@@ -22,9 +29,10 @@ export const envSchema = z.object({
   REDIS_PORT: z.coerce.number().positive().default(6379),
   REDIS_PASSWORD: z.string().min(8),
 
-  // JWT
-  JWT_SECRET: z.string().min(32),
-  JWT_EXPIRES_IN: z.string().default('12'),
+  JWT_ACCESS_TOKEN_SECRET: z.string().min(32),
+  JWT_ACCESS_TOKEN_EXPIRATION_TIME: msDurationSchema.default('15m'),
+  JWT_REFRESH_TOKEN_SECRET: z.string().min(32),
+  JWT_REFRESH_TOKEN_EXPIRATION_TIME: msDurationSchema.default('7d'),
   BCRYPT_SALT_ROUNDS: z.coerce.number().positive().default(12),
 
   // Logging

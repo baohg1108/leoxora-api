@@ -7,24 +7,41 @@ import {
   ParseUUIDPipe,
   Patch,
   Body,
-  Post,
+  // UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { CreateUserDto } from './dto/create-user.dto';
+// import { Roles } from '../../common/decorators/roles.decorator';
+// import { RolesGuard } from '../../common/guards/roles.guard';
+// import { OwnerOrAdminGuard } from '../../common/guards/owner-or-admin.guard';
+// import { UserRole } from '../../common/enums/user-role.enum';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
-  // create user
-  @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
+
+  // @Roles(UserRole.ADMIN)
+  // @UseGuards(RolesGuard)
+  @Get()
+  findAll() {
+    return this.usersService.findAll();
   }
 
-  // update user
+  // @Roles(UserRole.ADMIN)
+  // @UseGuards(RolesGuard)
+  @Get('email/:email')
+  findByEmail(@Param('email') email: string) {
+    return this.usersService.findByEmail(email);
+  }
+
+  // @UseGuards(OwnerOrAdminGuard)
+  @Get(':id')
+  findOne(@Param('id', ParseUUIDPipe) id: string) {
+    return this.usersService.findOne(id);
+  }
+
+  // @UseGuards(OwnerOrAdminGuard)
   @Patch(':id')
-  @HttpCode(200)
   update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateUserDto: UpdateUserDto,
@@ -32,28 +49,7 @@ export class UsersController {
     return this.usersService.update(id, updateUserDto);
   }
 
-  // find one
-  @Get(':id')
-  @HttpCode(200)
-  findOne(@Param('id', ParseUUIDPipe) id: string) {
-    return this.usersService.findOne(id);
-  }
-
-  // find by email
-  @Get('email/:email')
-  @HttpCode(200)
-  findByEmail(@Param('email') email: string) {
-    return this.usersService.findByEmail(email);
-  }
-
-  // find all
-  @Get()
-  @HttpCode(200)
-  findAll() {
-    return this.usersService.findAll();
-  }
-
-  // soft delete
+  // @UseGuards(OwnerOrAdminGuard)
   @Delete(':id/deactive')
   @HttpCode(204)
   softDelete(@Param('id', ParseUUIDPipe) id: string) {

@@ -29,8 +29,10 @@ export class User {
   @Column({ name: 'full_name', type: 'varchar', length: 255 })
   fullName!: string;
 
+  // Optional: user không bắt buộc có avatar lúc đăng ký, chỉ cần khi họ
+  // chủ động cập nhật qua PATCH /users/:id.
   @Column({ name: 'avatar_url', type: 'text', nullable: true })
-  avatarUrl!: string;
+  avatarUrl!: string | null;
 
   // Role Info
   @Column({ type: 'enum', enum: UserRole, default: UserRole.STUDENT })
@@ -52,6 +54,9 @@ export class User {
 
   @Column({ name: 'last_active', type: 'timestamptz', nullable: true })
   lastActive!: Date | null;
+
+  @Column({ name: 'hashed_refresh_token', type: 'text', nullable: true })
+  hashedRefreshToken!: string | null;
 
   // Audit Log
   @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })

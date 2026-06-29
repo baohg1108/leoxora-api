@@ -1,31 +1,49 @@
+@baseUrl = http://localhost:3001
+
 ### register
-POST http://localhost:3000/auth/register
+POST {{baseUrl}}/auth/register
 Content-Type: application/json
 
 {
-    "email": "test1@example.com",
-    "password": "123bA567@",
-    "fullName": "1adsAa"
-
+    "email": "1@gamil.com",
+    "password": "123456Abc@",
+    "fullName": "11"
 }
 
 ### login
-POST http://localhost:3000/auth/login
+# @name login
+POST {{baseUrl}}/auth/login
 Content-Type: application/json
 
 {
-    "email": "test1@example.com",
-    "password": "123bA567@"
+    "email": "1@gamil.com",
+    "password": "123456Abc@"
 }
 
-### find one
-GET http://localhost:3000/users/f17b8942-99b1-418b-ae4f-67a8d980335b
+### find one 
+GET {{baseUrl}}/users/982b781e-3deb-4f14-b7ea-51336021119b
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5ODJiNzgxZS0zZGViLTRmMTQtYjdlYS01MTMzNjAyMTExOWIiLCJlbWFpbCI6IjFAZ2FtaWwuY29tIiwicm9sZSI6IlNUVURFTlQiLCJpYXQiOjE3ODI3MjQ1MTcsImV4cCI6MTc4MjcyNTQxN30.sapF3On60K90Sh1SiN6rk8jPi-3LknJrzS2FuCjlSlY
 
 ### find email
-GET http://localhost:3000/users/email/1@example.com
+GET {{baseUrl}}/users/email/1@gamil.com
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5ODJiNzgxZS0zZGViLTRmMTQtYjdlYS01MTMzNjAyMTExOWIiLCJlbWFpbCI6IjFAZ2FtaWwuY29tIiwicm9sZSI6IlNUVURFTlQiLCJpYXQiOjE3ODI3MjQ1MTcsImV4cCI6MTc4MjcyNTQxN30.sapF3On60K90Sh1SiN6rk8jPi-3LknJrzS2FuCjlSlY
 
 ### find all
-GET http://localhost:3000/users
+GET {{baseUrl}}/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5ODJiNzgxZS0zZGViLTRmMTQtYjdlYS01MTMzNjAyMTExOWIiLCJlbWFpbCI6IjFAZ2FtaWwuY29tIiwicm9sZSI6IlNUVURFTlQiLCJpYXQiOjE3ODI3MjQ1MTcsImV4cCI6MTc4MjcyNTQxN30.sapF3On60K90Sh1SiN6rk8jPi-3LknJrzS2FuCjlSlY
 
 ### soft delete
-DELETE http://localhost:3000/users/9f3bb46a-44ac-4450-87ae-6a4ea3302d38/deactive
+DELETE {{baseUrl}}/users/9f3bb46a-44ac-4450-87ae-6a4ea3302d38/deactive
+Authorization: Bearer {{login.response.body.accessToken}}
+
+### refresh token - need refreshToken 
+POST {{baseUrl}}/auth/refresh
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5ODJiNzgxZS0zZGViLTRmMTQtYjdlYS01MTMzNjAyMTExOWIiLCJlbWFpbCI6IjFAZ2FtaWwuY29tIiwicm9sZSI6IlNUVURFTlQiLCJpYXQiOjE3ODI3MjQ1OTIsImV4cCI6MTc4MzMyOTM5Mn0.0FRtSw33C5glkT83He5WEdjulwuA89KJBD5C2x52PgE
+
+### logout
+POST {{baseUrl}}/auth/logout
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5ODJiNzgxZS0zZGViLTRmMTQtYjdlYS01MTMzNjAyMTExOWIiLCJlbWFpbCI6IjFAZ2FtaWwuY29tIiwicm9sZSI6IlNUVURFTlQiLCJpYXQiOjE3ODI3MjQ2MDQsImV4cCI6MTc4MjcyNTUwNH0.ITEqGcGaCaLk9HJinQW204nroDWpfP1TTfecv7Ylt48
+
+### who am i
+GET {{baseUrl}}/auth/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5ODJiNzgxZS0zZGViLTRmMTQtYjdlYS01MTMzNjAyMTExOWIiLCJlbWFpbCI6IjFAZ2FtaWwuY29tIiwicm9sZSI6IlNUVURFTlQiLCJpYXQiOjE3ODI3MjQ3OTcsImV4cCI6MTc4MjcyNTY5N30.w4-IKBLRa-KycGQ26Alw3VRlMTTrlk9nvCYSKv8oNsc
